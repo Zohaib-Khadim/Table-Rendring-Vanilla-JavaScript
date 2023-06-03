@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>bs ho gyi</title>
+</head>
+<style>
+    body {
+        text-align: center;
+    }
+    div {
+        display: inline-block;
+    }
+    button{
+        display:inline-block ;
+        padding: 10px 20px;
+    }
+    #table{
+        display: block;
+        margin-top: 20px;
+    }
+    th , td {
+        border:solid 1px black;
+        width: 100px;
+    }
+</style>
+<body id="body" >
+    <div class="search" style="border:2px solid black;width:850px;display: flex;margin-left:200px ;border-radius:15px;">
+        <a href="#" onclick="xyz();"><i class="fa-solid fa-magnifying-glass"  style="margin-top: 8px;margin-left: 20px;"></i></a>
+        <input id="find" placeholder="Create a table object"  style="width:750px;height:30px ;;border:none;outline:none; margin-left: 20px;" onclick=" addEventListener()" class="btn"></input>
+        <!-- <button>Search</button> -->
+    </div>
+    <div>
+        <button>Get</button>
+        <table id="table" cellpadding="15" border="5"></table>
+    </div>
+    <div class="progress">
+        <label>not Graduated</label>
+        <input type="checkbox" name="" id="not" onchange="not_Graduated();">
+        <label>Graduated</label>
+        <input type="checkbox" name="" id="yes" onchange="Graduated();">
+    </div>
+<script>
+   let  btnGet = document.querySelector('button');
+   let myTable = document.querySelector('#table');
+        let students = [
+        {id:0,name:"Subhan",status:"Graduated",university:"GCUF"},
+        {id:1,name:"Kamran",status:"Not Graduated",university:"GCUF"},
+        {id:2,name:"Ahmed",status:"Not Graduated",university:"GCUF"},
+        {id:3,name:"Zubair",status:"Graduated",university:"BZU"},
+        {id:4,name:"Waqar",status:"Not Graduated",university:"PU"},
+        {id:5,name:"Asad",status:"Not Graduated",university:"GCUF"}
+        ];
+        let headers = ['id','name','status','university']; 
+        btnGet.addEventListener('click',() =>{
+            let table = document.getElementById('table');
+            let headerRow = document.createElement('tr');
+
+            headers.forEach(headerText =>{
+                let header = document.createElement('th');
+                let textNode = document.createTextNode(headerText);
+                header.appendChild(textNode);
+                headerRow.appendChild(header)
+            });
+            table.appendChild(headerRow);
+
+            students.forEach(stu =>{
+                let row = document.createElement('tr')
+
+                 Object.values(stu).forEach(text =>{
+
+                let cell = document.createElement('td');
+                let textNode = document.createTextNode(text);
+                cell.appendChild(textNode);
+                row.appendChild(cell) 
+                 });
+                 table.appendChild(row);
+            });
+             
+            myTable.appendChild(table)
+        });
+        function xyz(){
+  let Search=document.getElementById("find").value;
+  if(Search===""||Search===null){
+    alert("enter some value");
+  }
+  else{
+    students.forEach((val,ind)=>{
+      if(Search==students[ind].university||Search==students[ind].name){
+        var renderMyTable=()=>{
+          table.innerHTML =`<tr>
+                           <td><b>Id</b></td>`+
+                           `<td><b>Name</b></td>`+
+                           `<td><b>Status</b></td>`+
+                           `<td><b>University</b></td>
+                           </tr>`;
+           students.forEach((val,ind) => {
+            if(Search==students[ind].university||Search==students[ind].name){
+              table.innerHTML += `<tr id='${ind}'>
+              <td>${students[ind].id}</td>`+
+              `<td>${students[ind].name}</td>`+
+              `<td>${students[ind].status}</td>`+
+              `<td>${students[ind].university}</td>
+              </tr>`;
+            }         
+           });        
+        }
+        renderMyTable();        
+      }
+    })
+  }
+}
+         function Graduated() {
+         students.forEach((val,ind)=>{
+            if(students[ind].status=="Graduated"){
+                document.getElementById(ind).style.backgroundColor="pink";
+            }
+         })
+         }
+         function not_Graduated() {
+            students.forEach((val,ind)=>{
+            if(students[ind].status=="Not Graduated"){
+                document.getElementById(ind).style.backgroundColor="aqua";
+            }
+         })
+        }
+        
+    </script>
+</body>
+</html>
